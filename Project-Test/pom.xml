@@ -1,0 +1,100 @@
+<project
+    xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+>
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.appdirect.automation</groupId>
+    <artifactId>AppDirectSample</artifactId>
+    <name>AppDirect-Sample-Program</name>
+    <version>1.0</version>
+    <packaging>jar</packaging>
+    <url>http://maven.apache.org</url>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <!-- <version>3.0.0-beta1</version> -->
+            <version>2.53.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>6.8</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <sourceDirectory>src/main/java</sourceDirectory>
+        <outputDirectory>${basedir}/target/classes</outputDirectory>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*.*</include>
+                </includes>
+            </resource>
+        </resources>
+        <testSourceDirectory>src/test/java</testSourceDirectory>
+        <testOutputDirectory>${basedir}/target/test-classes</testOutputDirectory>
+        <testResources>
+            <testResource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>forunittests/**</include>
+                </includes>
+            </testResource>
+        </testResources>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>2.19.1</version>
+                <configuration combine.self="override">
+                    <reportsDirectory>${project.build.directory}/failsafe-reports</reportsDirectory>
+                    <!-- disables jnunit and enables testng -->
+                    <junitArtifactName>none:none</junitArtifactName>
+                    <testNGArtifactName>org.testng:testng</testNGArtifactName>
+                    <properties>
+                        <property>
+                            <name>usedefaultlisteners</name>
+                            <value>true</value>
+                        </property>
+                        <property>
+                            <name>listener</name>
+                            <value>org.uncommons.reportng.HTMLReporter,org.uncommons.reportng.JUnitXMLReporter</value>
+                        </property>
+                        <property>
+                            <name>org.apache.commons.logging.simplelog.defaultlog</name>
+                            <value>fatal</value>
+                        </property>
+                    </properties>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>webdrivertest</id>
+                        <phase>integration-test</phase>
+                        <goals>
+                            <goal>integration-test</goal>
+                        </goals>
+                        <configuration>
+                            <suiteXmlFiles>
+                                <suiteXmlFile>
+                                    src/test/java/com/appdirect/webdriver/suites/SignUpSuite.xml
+                                </suiteXmlFile>
+                            </suiteXmlFiles>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

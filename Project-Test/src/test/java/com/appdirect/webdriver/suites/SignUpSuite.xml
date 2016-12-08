@@ -1,0 +1,10 @@
+<suite name="Sign Up test suite">
+    <listeners>
+        <listener class-name="com.appdirect.webdriver.listeners.TestListener"/>
+    </listeners>
+    <test name="Sign up tests">
+        <packages>
+            <package name="com.appdirect.webdriver.tests.signup.*" />
+        </packages>
+    </test>
+</suite>
